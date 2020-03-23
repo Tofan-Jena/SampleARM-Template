@@ -1,5 +1,5 @@
-##### SampleARM-Template
+# SampleARM-Template
 
 
-This will Create one Resource Group and Storage Account
+##This will Create one Resource Group and Storage Account
 
