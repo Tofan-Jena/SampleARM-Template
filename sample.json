@@ -31,7 +31,12 @@
 
 	
 	],
-	"outputs": {},
+	"outputs": {
+  "resourceID": {
+    "type": "string",
+    "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('SAname'))]"
+  }
+},
 	
 	"functions": []
 }
