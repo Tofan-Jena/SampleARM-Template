@@ -1,0 +1,157 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Prefix": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "RGName": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "ASP-Name": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "Location": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "WebAppName": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "Env": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        }
+
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('RGName')]",
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2019-10-01",
+            "location": "[parameters('Location')]",
+            "tags": {
+            }
+        },
+        {
+            "name": "webApp",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-10-01",
+            //"location" : "[parameters('Location')]",
+            "resourceGroup": "[parameters('RGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups', parameters('RGName'))]"
+            ],
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "outer"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Web/serverfarms",
+                            "apiVersion": "2021-01-15",
+                            "name": "[concat(parameters('Prefix'),parameters('Env'),parameters('ASP-Name'))]",
+                            "location": "[parameters('Location')]",
+                            "sku": {
+                                "name": "S1",
+                                "tier": "Standard",
+                                "size": "S1",
+                                "family": "S",
+                                "capacity": 1
+                            },
+                            "kind": "app",
+                            "properties": {
+                                "perSiteScaling": false,
+                                "elasticScaleEnabled": false,
+                                "maximumElasticWorkerCount": 1,
+                                "isSpot": false,
+                                "reserved": false,
+                                "isXenon": false,
+                                "hyperV": false,
+                                "targetWorkerCount": 0,
+                                "targetWorkerSizeId": 0
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Web/sites",
+                            "apiVersion": "2021-01-15",
+                            "name": "[concat(parameters('Prefix'),parameters('Env'),parameters('WebAppName'))]",
+                            "location": "[parameters('Location')]",
+                            "kind": "app",
+                            //"dependsOn" : "[resourceId('Microsoft.Web/serverfarms',concat(parameters('Prefix'),parameters('Env'),parameters('ASP-Name')))]",
+                            "properties": {
+                                "enabled": true,
+                                "hostNameSslStates": [
+                                    {
+                                        "name": "[concat(parameters('Prefix'),parameters('Env'),parameters('WebAppName'), '.azurewebsites.net')]",
+                                        "sslState": "Disabled",
+                                        "hostType": "Standard"
+                                    },
+                                    {
+                                        "name": "[concat(parameters('Prefix'),parameters('Env'),parameters('WebAppName'), '.scm.azurewebsites.net')]",
+                                        "sslState": "Disabled",
+                                        "hostType": "Repository"
+                                    }
+                                ],
+                                //"serverFarmId": "[concat(subscription().subscriptionId, resourceGroup().id, 'providers','Microsoft.Web']",
+                                "serverFarmId": "/subscriptions/67006b24-52bb-4f1c-b621-905523fa2156/resourceGroups/RG/providers/Microsoft.Web/serverFarms/myappstgasp",
+                                "reserved": false,
+                                "isXenon": false,
+                                "hyperV": false,
+                                "siteConfig": {
+                                    "numberOfWorkers": 1,
+                                    "acrUseManagedIdentityCreds": false,
+                                    "alwaysOn": false,
+                                    "http20Enabled": false,
+                                    "functionAppScaleLimit": 0,
+                                    "minimumElasticInstanceCount": 0
+                                },
+                                "scmSiteAlsoStopped": false,
+                                "clientAffinityEnabled": true,
+                                "clientCertEnabled": false,
+                                "clientCertMode": "Required",
+                                "hostNamesDisabled": false,
+                                //"customDomainVerificationId": "23D9F7B9F9E2258783C242DA777EB67EDCF227D666E41F142F1720A28B44D384",
+                                "containerSize": 0,
+                                "dailyMemoryTimeQuota": 0,
+                                "httpsOnly": false,
+                                "redundancyMode": "None",
+                                "storageAccountRequired": false,
+                                "keyVaultReferenceIdentity": "SystemAssigned"
+                            }
+                        }
+
+                    ],
+                    "outputs": {}
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
