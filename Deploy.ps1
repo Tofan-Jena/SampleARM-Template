@@ -1,1 +1,1 @@
-﻿New-AzResourceGroupDeployment -ResourceGroupName remotestatefile -Mode Incremental -TemplateFile C:\temp\arm\sample.json -TemplateParameterFile C:\temp\arm\sample.parameter.json
+﻿New-AzDeployment -Name "MyApp" -Location "southindia" -TemplateParameterFile .\sample.parameter.json -TemplateFile .\MyApp.json
