@@ -44,7 +44,7 @@
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('RGName')]",
+            "name": "[concat(parameters('Prefix'),parameters('Env'),parameters('RGName'))]",
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2019-10-01",
             "location": "[parameters('Location')]",
