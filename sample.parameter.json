@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "Env": {
-            "value": "stg"
+            "value": "#{stg}#"
         },
         "Prefix": {
             "value": "myapp"
@@ -16,7 +16,7 @@
             "value": "southindia"
         },
         "RGName": {
-            "value": "RG"
+            "value": "#{RG}#"
         },
         "WebAppName": {
             "value": "app"
