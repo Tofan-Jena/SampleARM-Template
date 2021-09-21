@@ -58,7 +58,7 @@
             //"location" : "[parameters('Location')]",
             "resourceGroup": "[concat(parameters('Prefix'),parameters('Env'),parameters('RGName'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups', parameters('RGName'))]"
+                "[resourceId('Microsoft.Resources/resourceGroups', concat(parameters('Prefix'),parameters('Env'),parameters('RGName')))]"
             ],
             "properties": {
                 "expressionEvaluationOptions": {
@@ -119,7 +119,7 @@
                                         "hostType": "Repository"
                                     }
                                 ],
-                                "serverFarmId": "[concat(subscription().id,'/','resourceGroups','/', parameters('RGName'),'/','providers','/','Microsoft.Web','/','serverFarms','/',concat(parameters('Prefix'),parameters('Env'),parameters('ASP-Name')))]",
+                                "serverFarmId": "[concat(subscription().id,'/','resourceGroups','/', concat(parameters('Prefix'),parameters('Env'),parameters('RGName')),'/','providers','/','Microsoft.Web','/','serverFarms','/',concat(parameters('Prefix'),parameters('Env'),parameters('ASP-Name')))]",
                                 //"serverFarmId": "/subscriptions/67006b24-52bb-4f1c-b621-905523fa2156/resourceGroups/RG/providers/Microsoft.Web/serverFarms/myappstgasp",
                                 "reserved": false,
                                 "isXenon": false,
