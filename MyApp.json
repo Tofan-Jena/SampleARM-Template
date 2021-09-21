@@ -56,7 +56,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             //"location" : "[parameters('Location')]",
-            "resourceGroup": "[parameters('RGName')]",
+            "resourceGroup": "[concat(parameters('Prefix'),parameters('Env'),parameters('RGName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/resourceGroups', parameters('RGName'))]"
             ],
